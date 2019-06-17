@@ -1,0 +1,21 @@
+import requests
+import re
+from bs4 import BeautifulSoup
+
+def get_movie():
+    headers = {
+    'user-agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1',
+    }
+    movie_list = []
+    for i in range(0, 10):
+        url = 'https://movie.douban.com/top250?start=%d&filter=' %(i * 25)
+        response = requests.get(url, headers = headers)
+        soup = BeautifulSoup(response.text, 'lxml')
+        title = soup.find_all('span', class_= 'title')
+        for each in title:
+            movie = each.text
+            if re.match(r'[\u4e00-\u9fa5]+',movie):
+                movie_list.append(movie)
+    return movie_list
+
+print(get_movie())
