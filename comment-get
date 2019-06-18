@@ -1,0 +1,16 @@
+import requests
+import json
+import re
+
+url = 'https://www.liaoxuefeng.com/api/ref/1017801751919456/topics'
+headers = {
+    'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1'
+}
+response = requests.get(url, headers = headers)
+json_data = json.loads(response.text)
+comment_list = json_data['results']
+pattern = re.compile(r'<.*?>',re.M)
+for each in comment_list:
+    message = pattern.sub('',each['content'])
+
+    print(message)
