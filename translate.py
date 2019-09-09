@@ -1,5 +1,3 @@
-#测试
-
 import requests
 
 url = 'https://fanyi.baidu.com/basetrans'
@@ -24,5 +22,5 @@ headers = {
 }
 response = requests.post(url, data = data, headers = headers)
 print(response.content.decode())
-#2019年
+#2019年测试
 
