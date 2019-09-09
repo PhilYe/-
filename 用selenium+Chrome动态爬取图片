@@ -1,0 +1,19 @@
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+def main():
+    #提供了对浏览器的配置:ChromeOptions( selenium.webdriver.ChromeOptions)
+    #创建出启动浏览器所需要配置 -- 实例化ChromeOptions浏览器选项对象
+    co = webdriver.ChromeOptions()
+    # 构建配置信息 -- 通过浏览器选项对象调用配置方法
+    co.headless = True# 设置浏览器为无头模式
+    # 将配置信息加入到浏览器启动 -- 实例化浏览器驱动对象添加属性option值
+    driver = webdriver.Chrome(options=co)
+    driver.get('http://image.baidu.com/search/index?tn=baiduimage&ct=201326592&lm=-1&cl=2&ie=gb18030&word=%CD%BC%C6%AC&fr=ala&ala=1&alatpl=others&pos=0')
+    soup = BeautifulSoup(driver.page_source,'lxml')
+    for img_tag in soup.find_all(name = 'div', class_='imgbox'):
+        print('http://image.baidu.com'+img_tag.a.get('href'))
+
+if __name__ == '__main__':
+    main()
